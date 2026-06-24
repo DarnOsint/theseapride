@@ -18,6 +18,8 @@
   --color-ocean-400: #2dd4bf;
   --color-ocean-500: #14b8a6;
   --color-ocean-600: #0d9488;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
 }
@@ -35,15 +37,15 @@
 }
 
 .dark {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
+  --bg-primary: #0b1121;
+  --bg-secondary: #0f172a;
+  --bg-tertiary: #1e293b;
   --text-primary: #f1f5f9;
   --text-secondary: #cbd5e1;
   --text-muted: #64748b;
-  --border-color: #334155;
-  --card-bg: #1e293b;
-  --card-border: #334155;
+  --border-color: #1e293b;
+  --card-bg: #0f172a;
+  --card-border: #1e293b;
 }
 
 html {
@@ -58,6 +60,16 @@ body {
 
 .font-serif {
   font-family: var(--font-serif);
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes scroll-indicator {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(8px); opacity: 0; }
 }
 
 @layer utilities {
@@ -75,5 +87,14 @@ body {
   }
   .text-site-secondary {
     color: var(--text-secondary);
+  }
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  .animate-scroll {
+    animation: scroll-indicator 1.5s ease-in-out infinite;
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-sea-900/20;
   }
 }
