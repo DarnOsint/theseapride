@@ -162,7 +162,7 @@ export default function ContactPage() {
                     <MapPin className="w-5 h-5 text-sea-500 shrink-0 mt-0.5" />
                     <div>
                       <p className="font-medium text-sea-700">Location</p>
-                      <p className="text-sm text-sea-500">Lagos, Nigeria</p>
+                      <p className="text-sm text-sea-500">Iyana Anfani, Ringroad, Ibadan</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">

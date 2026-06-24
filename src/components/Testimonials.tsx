@@ -2,19 +2,19 @@ import { Star, Waves } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Sarah Mitchell",
-    text: "The Seapride Luxury Platter was absolutely incredible. Best seafood in Lagos without a doubt! Ordering via WhatsApp was so convenient.",
+    name: "Adebisi Ogunlade",
+    text: "The Seapride Luxury Platter was absolutely incredible. Best seafood in Ibadan without a doubt! Ordering via WhatsApp was so convenient.",
     rating: 5,
     role: "Food Critic",
   },
   {
-    name: "James Chen",
+    name: "Chukwudi Okonkwo",
     text: "Extraordinary flavours. The Cajun Seafood Boil is a must-try — perfectly spiced and generous portions. Delivery was prompt and professional.",
     rating: 5,
     role: "Regular Customer",
   },
   {
-    name: "Emma Rodriguez",
+    name: "Aminu Suleiman",
     text: "We ordered the Seafarer's Feast for a family gathering and it was perfect. Everyone was impressed. TheSeaPride never disappoints!",
     rating: 5,
     role: "Happy Customer",

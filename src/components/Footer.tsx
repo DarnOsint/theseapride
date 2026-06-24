@@ -14,7 +14,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm leading-relaxed text-sea-300">
-              Premium seafood dining in the heart of Lagos. Fresh catches,
+              Premium seafood dining in the heart of Ibadan. Fresh catches,
               bold coastal flavors, and an unforgettable experience.
             </p>
             <div className="flex items-center gap-3 pt-2">
@@ -76,7 +76,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-sea-400 shrink-0 mt-0.5" />
-                <span>Lagos, Nigeria</span>
+                <span>Iyana Anfani Round About, 26 MKO Abiola Way, Anfani Rd, Ringroad, Ibadan</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-sea-400 shrink-0" />

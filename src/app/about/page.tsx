@@ -58,7 +58,7 @@ export default function AboutPage() {
             <div className="space-y-4 text-sea-600 leading-relaxed">
               <p>
                 TheSeaPride was born from a simple belief: the best seafood
-                deserves to be celebrated. Based in Lagos, we bring the
+                deserves to be celebrated. Based in Ibadan, we bring the
                 ocean&apos;s finest catches straight to your door.
               </p>
               <p>
@@ -76,7 +76,7 @@ export default function AboutPage() {
 
             <div className="mt-8 inline-flex items-center gap-2 bg-sea-50 border border-sea-200 rounded-full px-5 py-2.5 text-sm text-sea-700">
               <MapPin className="w-4 h-4" />
-              Lagos, Nigeria
+              Iyana Anfani, Ringroad, Ibadan
             </div>
           </div>
         </div>

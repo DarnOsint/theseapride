@@ -109,7 +109,7 @@ export default function MenuPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-sea-600 text-sm">
             Prices are in Nigerian Naira (₦). All orders are processed via
-            WhatsApp. Delivery available within Lagos.
+            WhatsApp. Delivery available within Ibadan.
           </p>
           <a
             href="https://wa.me/2347062270224"

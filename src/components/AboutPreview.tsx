@@ -30,9 +30,9 @@ export default function AboutPreview() {
               A Passion for the Ocean&apos;s Bounty
             </h2>
             <p className="text-sea-600 leading-relaxed">
-              TheSeaPride brings the freshest seafood from sustainable fisheries
-              straight to your table. Based in Lagos, we&apos;re redefining coastal
-              dining with bold flavours and premium quality.
+            TheSeaPride brings the freshest seafood from sustainable fisheries
+            straight to your table. Based in Ibadan, we&apos;re redefining coastal
+            dining with bold flavours and premium quality.
             </p>
             <p className="text-sea-500 leading-relaxed">
               Every dish is a celebration of the sea — from our hand-selected
@@ -42,7 +42,7 @@ export default function AboutPreview() {
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <div className="flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-sea-500" />
-                <span className="text-sm font-medium text-sea-700">Lagos, Nigeria</span>
+                <span className="text-sm font-medium text-sea-700">Ibadan, Nigeria</span>
               </div>
               <div className="flex items-center gap-2">
                 <Fish className="w-5 h-5 text-sea-500" />

@@ -10,7 +10,7 @@ export default function HeroSection() {
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 bg-sea-100 text-sea-700 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
             <Waves className="w-4 h-4" />
-            Lagos&apos; Finest Seafood
+            Ibadan&apos;s Finest Seafood
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-sea-900 leading-tight">
@@ -19,7 +19,7 @@ export default function HeroSection() {
           </h1>
 
           <p className="mt-6 text-lg lg:text-xl text-sea-600 max-w-xl leading-relaxed">
-            Premium seafood dining in Lagos. Fresh catches, bold coastal
+            Premium seafood dining in Ibadan. Fresh catches, bold coastal
             flavors, and an unforgettable experience — delivered to your door.
           </p>
 
