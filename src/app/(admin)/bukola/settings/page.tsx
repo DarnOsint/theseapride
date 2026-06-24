@@ -52,7 +52,7 @@ const sectionLabels: Record<string, string> = {
   footer: "Footer",
   meta: "SEO / Meta Tags",
 };
-const sectionIcons: Record<string, string> = {
+const sectionEmojis: Record<string, string> = {
   social: "🔗",
   hero: "🏠",
   about: "📖",
@@ -61,7 +61,6 @@ const sectionIcons: Record<string, string> = {
   footer: "🦶",
   meta: "🔍",
 };
-const socialKeys = ["instagram_url", "facebook_url", "twitter_url", "tiktok_url", "youtube_url"];
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState<Setting[]>([]);
@@ -117,44 +116,51 @@ export default function SettingsPage() {
   }
 
   const businessKeys = Object.entries(settingLabels).filter(([, v]) => v.section === "business").map(([k]) => k);
+  const socialKeys = Object.entries(settingLabels).filter(([, v]) => v.section === "social").map(([k]) => k);
   const activeSocialCount = socialKeys.filter((k) => getValue(k)).length;
 
-  if (loading) return <div className="text-center py-20 text-gray-500">Loading settings...</div>;
+  if (loading) return (
+    <div className="flex items-center justify-center py-32">
+      <div className="text-sea-400 text-sm">Loading settings...</div>
+    </div>
+  );
 
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-gray-800">Site Settings</h1>
-          <p className="text-sm text-gray-500 mt-1">Manage your website configuration</p>
+          <h1 className="text-2xl font-serif font-bold text-white">Site Settings</h1>
+          <p className="text-sm text-sea-400 mt-1">Manage your website configuration</p>
         </div>
       </div>
 
       {message && (
-        <div className={`mb-6 px-5 py-3 rounded-xl text-sm ${message.includes("Error") ? "bg-red-50 border border-red-200 text-red-700" : "bg-green-50 border border-green-200 text-green-700"}`}>
+        <div className={`mb-6 px-5 py-3 rounded-xl text-sm ${
+          message.includes("Error") ? "bg-red-900/50 border border-red-700/50 text-red-300" : "bg-emerald-900/50 border border-emerald-700/50 text-emerald-300"
+        }`}>
           {message}
         </div>
       )}
 
       <form onSubmit={handleSave} className="space-y-8">
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-800 mb-1 flex items-center gap-2">
-            <Waves className="w-5 h-5 text-sea-500" />
+        <div className="bg-sea-900/80 border border-sea-800 rounded-2xl p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-gray-200 mb-1 flex items-center gap-2">
+            <Waves className="w-5 h-5 text-sea-400" />
             Contact &amp; Business Info
           </h2>
-          <p className="text-sm text-gray-500 mb-5">Basic business contact details and hours</p>
+          <p className="text-sm text-sea-500 mb-5">Basic business contact details and hours</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {businessKeys.map((key) => {
               const c = settingLabels[key];
               return (
                 <div key={key}>
-                  <label className="block text-xs font-medium text-gray-600 mb-1.5">{c.label}</label>
+                  <label className="block text-xs font-medium text-sea-400 mb-1.5">{c.label}</label>
                   <input
                     type={c.type}
                     value={getValue(key)}
                     onChange={(e) => setValue(key, e.target.value)}
                     placeholder={c.placeholder}
-                    className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:border-sea-500 focus:ring-2 focus:ring-sea-100 outline-none text-sm"
+                    className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm"
                   />
                 </div>
               );
@@ -167,13 +173,13 @@ export default function SettingsPage() {
             .filter(([, v]) => v.section === sectionKey)
             .map(([k]) => k);
           return (
-            <div key={sectionKey} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-              <h2 className="text-lg font-semibold text-gray-800 mb-1 flex items-center gap-2">
-                <span>{sectionIcons[sectionKey]}</span>
+            <div key={sectionKey} className="bg-sea-900/80 border border-sea-800 rounded-2xl p-6 shadow-sm">
+              <h2 className="text-lg font-semibold text-gray-200 mb-1 flex items-center gap-2">
+                <span>{sectionEmojis[sectionKey]}</span>
                 {sectionLabels[sectionKey]}
               </h2>
               {sectionKey === "social" && (
-                <p className="text-sm text-gray-500 mb-5">
+                <p className="text-sm text-sea-500 mb-5">
                   When a URL is provided, the icon appears on the website. Leave blank to hide ({activeSocialCount}/{socialKeys.length} active).
                 </p>
               )}
@@ -187,18 +193,18 @@ export default function SettingsPage() {
                       tiktok_url: "🎵", youtube_url: "▶️",
                     };
                     return (
-                      <div key={key} className={`p-4 rounded-xl border-2 transition-colors ${val ? "border-sea-200 bg-sea-50" : "border-gray-100 bg-gray-50/50"}`}>
-                        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+                      <div key={key} className={`p-4 rounded-xl border-2 transition-colors ${val ? "border-sea-600 bg-sea-800/40" : "border-sea-800 bg-sea-900/30"}`}>
+                        <label className="flex items-center gap-2 text-sm font-medium text-gray-300 mb-2">
                           <span>{socialEmojis[key] || "🔗"}</span>
                           {c.label}
-                          {val && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Active</span>}
+                          {val && <span className="text-xs bg-emerald-900/60 text-emerald-300 px-2 py-0.5 rounded-full">Active</span>}
                         </label>
                         <input
                           type={c.type}
                           value={val}
                           onChange={(e) => setValue(key, e.target.value)}
                           placeholder={c.placeholder}
-                          className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:border-sea-500 focus:ring-2 focus:ring-sea-100 outline-none text-sm"
+                          className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm"
                         />
                       </div>
                     );
@@ -206,26 +212,26 @@ export default function SettingsPage() {
                   if (c.type === "textarea") {
                     return (
                       <div key={key} className="md:col-span-2">
-                        <label className="block text-xs font-medium text-gray-600 mb-1.5">{c.label}</label>
+                        <label className="block text-xs font-medium text-sea-400 mb-1.5">{c.label}</label>
                         <textarea
                           value={val}
                           onChange={(e) => setValue(key, e.target.value)}
                           placeholder={c.placeholder}
                           rows={4}
-                          className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:border-sea-500 focus:ring-2 focus:ring-sea-100 outline-none text-sm resize-none"
+                          className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm resize-none"
                         />
                       </div>
                     );
                   }
                   return (
                     <div key={key}>
-                      <label className="block text-xs font-medium text-gray-600 mb-1.5">{c.label}</label>
+                      <label className="block text-xs font-medium text-sea-400 mb-1.5">{c.label}</label>
                       <input
                         type={c.type}
                         value={val}
                         onChange={(e) => setValue(key, e.target.value)}
                         placeholder={c.placeholder}
-                        className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:border-sea-500 focus:ring-2 focus:ring-sea-100 outline-none text-sm"
+                        className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm"
                       />
                     </div>
                   );
@@ -235,24 +241,24 @@ export default function SettingsPage() {
           );
         })}
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-800 mb-5">Testimonials</h2>
+        <div className="bg-sea-900/80 border border-sea-800 rounded-2xl p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-gray-200 mb-5">Testimonials</h2>
           {[1, 2, 3].map((i) => (
-            <div key={i} className="mb-6 pb-6 border-b border-gray-100 last:border-0 last:mb-0 last:pb-0">
-              <h3 className="text-sm font-medium text-gray-700 mb-4">Testimonial #{i}</h3>
+            <div key={i} className="mb-6 pb-6 border-b border-sea-800 last:border-0 last:mb-0 last:pb-0">
+              <h3 className="text-sm font-medium text-gray-300 mb-4">Testimonial #{i}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Name</label>
+                  <label className="block text-xs font-medium text-sea-400 mb-1">Name</label>
                   <input
                     type="text"
                     value={getValue(`testimonial_${i}_name`)}
                     onChange={(e) => setValue(`testimonial_${i}_name`, e.target.value)}
                     placeholder="Customer name"
-                    className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:border-sea-500 focus:ring-2 focus:ring-sea-100 outline-none text-sm"
+                    className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Rating (1–5)</label>
+                  <label className="block text-xs font-medium text-sea-400 mb-1">Rating (1–5)</label>
                   <input
                     type="number"
                     min={1}
@@ -260,17 +266,17 @@ export default function SettingsPage() {
                     value={getValue(`testimonial_${i}_rating`)}
                     onChange={(e) => setValue(`testimonial_${i}_rating`, e.target.value)}
                     placeholder="5"
-                    className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:border-sea-500 focus:ring-2 focus:ring-sea-100 outline-none text-sm"
+                    className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm"
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Review Text</label>
+                  <label className="block text-xs font-medium text-sea-400 mb-1">Review Text</label>
                   <textarea
                     value={getValue(`testimonial_${i}_text`)}
                     onChange={(e) => setValue(`testimonial_${i}_text`, e.target.value)}
                     placeholder="What the customer said..."
                     rows={3}
-                    className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:border-sea-500 focus:ring-2 focus:ring-sea-100 outline-none text-sm resize-none"
+                    className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm resize-none"
                   />
                 </div>
               </div>
@@ -282,7 +288,7 @@ export default function SettingsPage() {
           <button
             type="submit"
             disabled={saving}
-            className="flex items-center gap-2 bg-sea-500 hover:bg-sea-600 disabled:bg-sea-300 text-white px-8 py-3 rounded-xl font-semibold text-sm transition-all hover:shadow-lg"
+            className="flex items-center gap-2 bg-sea-500 hover:bg-sea-400 disabled:bg-sea-600/50 text-white px-8 py-3 rounded-xl font-semibold text-sm transition-all hover:shadow-lg"
           >
             <Save className="w-4 h-4" />
             {saving ? "Saving..." : "Save All Settings"}

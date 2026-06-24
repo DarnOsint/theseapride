@@ -6,11 +6,11 @@ export default async function BukolaLayout({ children }: { children: React.React
   const authed = await isAuthenticated();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen bg-sea-950">
       {authed ? (
         <AdminShell>{children}</AdminShell>
       ) : (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sea-900 via-sea-800 to-ocean-900">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sea-950 via-sea-900 to-slate-950">
           {children}
         </div>
       )}
@@ -24,7 +24,7 @@ function AdminShell({ children }: { children: React.ReactNode }) {
       <AdminSidebar />
       <div className="flex-1 ml-64">
         <AdminTopBar />
-        <main className="p-8 bg-gray-50 dark:bg-gray-950 min-h-screen">{children}</main>
+        <main className="p-8 min-h-screen">{children}</main>
       </div>
     </div>
   );
@@ -38,24 +38,24 @@ function AdminSidebar() {
   ];
 
   return (
-    <aside className="fixed top-0 left-0 w-64 h-screen bg-sea-900 text-white flex flex-col z-50">
-      <div className="p-6 border-b border-sea-700">
-        <h1 className="text-xl font-serif font-bold">TheSeaPride</h1>
-        <p className="text-sea-300 text-xs mt-1">Admin Panel</p>
+    <aside className="fixed top-0 left-0 w-64 h-screen bg-sea-950 border-r border-sea-800 flex flex-col z-50">
+      <div className="p-6 border-b border-sea-800">
+        <h1 className="text-xl font-serif font-bold text-white">TheSeaPride</h1>
+        <p className="text-sea-400 text-xs mt-1">Admin Panel</p>
       </div>
       <nav className="flex-1 p-4 space-y-1">
         {links.map((link) => (
           <a
             key={link.href}
             href={link.href}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-sea-800 text-sea-200 hover:text-white transition-colors text-sm"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-sea-800/60 text-sea-300 hover:text-white transition-colors text-sm"
           >
             <span>{link.icon}</span>
             {link.label}
           </a>
         ))}
       </nav>
-      <div className="p-4 border-t border-sea-700 space-y-2">
+      <div className="p-4 border-t border-sea-800 space-y-2">
         <form action={async () => {
           "use server";
           await logout();
@@ -63,7 +63,7 @@ function AdminSidebar() {
         }}>
           <button
             type="submit"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sea-800 hover:bg-red-600 text-sea-300 hover:text-white transition-colors text-sm w-full"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sea-800/50 hover:bg-red-600/80 text-sea-400 hover:text-white transition-colors text-sm w-full"
           >
             <span>🚪</span>
             Sign Out
@@ -76,16 +76,16 @@ function AdminSidebar() {
 
 function AdminTopBar() {
   return (
-    <header className="h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-8 sticky top-0 z-40">
+    <header className="h-16 bg-sea-900 border-b border-sea-800 flex items-center justify-between px-8 sticky top-0 z-40">
       <div>
-        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Welcome, Bukola</h2>
+        <h2 className="text-lg font-semibold text-gray-200">Welcome, Bukola</h2>
       </div>
       <div className="flex items-center gap-4">
         <AdminThemeToggle />
         <a
           href="/"
           target="_blank"
-          className="text-xs text-sea-500 hover:text-sea-700 dark:text-sea-400 underline"
+          className="text-xs text-sea-400 hover:text-white underline"
         >
           View Site →
         </a>
