@@ -1,21 +1,21 @@
-import { Star } from "lucide-react";
+import { Star, Waves } from "lucide-react";
 
 const testimonials = [
   {
     name: "Sarah Mitchell",
-    text: "The grilled lobster thermidor was absolutely divine. Best seafood I've had in years! The ambiance perfectly complements the culinary experience.",
+    text: "The Seapride Luxury Platter was absolutely incredible. Best seafood in Lagos without a doubt! Ordering via WhatsApp was so convenient.",
     rating: 5,
     role: "Food Critic",
   },
   {
     name: "James Chen",
-    text: "An extraordinary dining experience. The freshness of the seafood is unmatched, and the service is impeccable. A true gem by the coast.",
+    text: "Extraordinary flavours. The Cajun Seafood Boil is a must-try — perfectly spiced and generous portions. Delivery was prompt and professional.",
     rating: 5,
-    role: "Regular Guest",
+    role: "Regular Customer",
   },
   {
     name: "Emma Rodriguez",
-    text: "We celebrated our anniversary here and it was perfect. The pan-seared salmon and the ocean view made it an unforgettable evening.",
+    text: "We ordered the Seafarer's Feast for a family gathering and it was perfect. Everyone was impressed. TheSeaPride never disappoints!",
     rating: 5,
     role: "Happy Customer",
   },
@@ -26,11 +26,12 @@ export default function Testimonials() {
     <section className="py-16 lg:py-24 bg-sea-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
+          <Waves className="w-8 h-8 text-sea-400 mx-auto mb-4" />
           <h2 className="text-3xl lg:text-4xl font-serif font-bold text-white">
             What Our Guests Say
           </h2>
           <p className="mt-4 text-sea-300">
-            Real words from real people who love the sea as much as we do
+            Real reviews from people who love TheSeaPride
           </p>
         </div>
 

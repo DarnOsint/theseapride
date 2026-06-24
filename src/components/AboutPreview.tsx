@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Anchor, Fish, Waves } from "lucide-react";
+import { Anchor, Fish, Waves, MapPin } from "lucide-react";
 
 export default function AboutPreview() {
   return (
@@ -11,7 +11,7 @@ export default function AboutPreview() {
               <div className="text-center p-8">
                 <Waves className="w-16 h-16 text-sea-500 mx-auto mb-4" />
                 <p className="text-sea-700 text-lg font-serif italic">
-                  &quot;Where every wave brings a new flavor&quot;
+                  &ldquo;Where every wave brings a new flavor&rdquo;
                 </p>
               </div>
             </div>
@@ -30,17 +30,20 @@ export default function AboutPreview() {
               A Passion for the Ocean&apos;s Bounty
             </h2>
             <p className="text-sea-600 leading-relaxed">
-              Founded by Chef Marco Rossi, TheSeaPride brings the freshest
-              seafood from sustainable fisheries to your table. Our coastal
-              heritage and commitment to quality have made us a beloved
-              destination for seafood lovers.
+              TheSeaPride brings the freshest seafood from sustainable fisheries
+              straight to your table. Based in Lagos, we&apos;re redefining coastal
+              dining with bold flavours and premium quality.
             </p>
             <p className="text-sea-500 leading-relaxed">
               Every dish is a celebration of the sea — from our hand-selected
-              catches to our farm-fresh accompaniments. We believe in
-              sustainable dining without compromising on taste.
+              catches to our farm-fresh accompaniments. Order through WhatsApp
+              and enjoy restaurant-quality seafood at home.
             </p>
-            <div className="flex items-center gap-4 pt-2">
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-sea-500" />
+                <span className="text-sm font-medium text-sea-700">Lagos, Nigeria</span>
+              </div>
               <div className="flex items-center gap-2">
                 <Fish className="w-5 h-5 text-sea-500" />
                 <span className="text-sm font-medium text-sea-700">Sustainable Catch</span>

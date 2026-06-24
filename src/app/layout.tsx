@@ -17,7 +17,10 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "TheSeaPride | Premium Seafood Restaurant",
   description:
-    "Experience the finest seafood dining at TheSeaPride. Fresh catches, ocean views, and unforgettable flavors.",
+    "Experience the finest seafood dining at TheSeaPride. Fresh catches, bold flavors, and unforgettable coastal cuisine in Lagos.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -27,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="antialiased">
+      <body className="antialiased bg-white text-sea-900 font-sans">
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
