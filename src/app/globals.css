@@ -22,15 +22,59 @@
   --font-sans: "Inter", system-ui, sans-serif;
 }
 
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border-color: #e2e8f0;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+}
+
+.dark {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --border-color: #334155;
+  --card-bg: #1e293b;
+  --card-border: #334155;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-sans);
-  color: #1e293b;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .font-serif {
   font-family: var(--font-serif);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .bg-site {
+    background-color: var(--bg-primary);
+  }
+  .bg-site-secondary {
+    background-color: var(--bg-secondary);
+  }
+  .text-site {
+    color: var(--text-primary);
+  }
+  .text-site-secondary {
+    color: var(--text-secondary);
+  }
 }

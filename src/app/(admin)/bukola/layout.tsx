@@ -1,11 +1,12 @@
 import { isAuthenticated, logout } from "@/lib/admin-auth";
 import { redirect } from "next/navigation";
+import AdminThemeToggle from "./AdminThemeToggle";
 
 export default async function BukolaLayout({ children }: { children: React.ReactNode }) {
   const authed = await isAuthenticated();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {authed ? (
         <AdminShell>{children}</AdminShell>
       ) : (
@@ -23,7 +24,7 @@ function AdminShell({ children }: { children: React.ReactNode }) {
       <AdminSidebar />
       <div className="flex-1 ml-64">
         <AdminTopBar />
-        <main className="p-8">{children}</main>
+        <main className="p-8 bg-gray-50 dark:bg-gray-950 min-h-screen">{children}</main>
       </div>
     </div>
   );
@@ -54,7 +55,7 @@ function AdminSidebar() {
           </a>
         ))}
       </nav>
-      <div className="p-4 border-t border-sea-700">
+      <div className="p-4 border-t border-sea-700 space-y-2">
         <form action={async () => {
           "use server";
           await logout();
@@ -75,17 +76,20 @@ function AdminSidebar() {
 
 function AdminTopBar() {
   return (
-    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 sticky top-0 z-40">
+    <header className="h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-8 sticky top-0 z-40">
       <div>
-        <h2 className="text-lg font-semibold text-gray-800">Welcome, Bukola</h2>
+        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Welcome, Bukola</h2>
       </div>
-      <a
-        href="/"
-        target="_blank"
-        className="text-xs text-sea-500 hover:text-sea-700 underline"
-      >
-        View Site →
-      </a>
+      <div className="flex items-center gap-4">
+        <AdminThemeToggle />
+        <a
+          href="/"
+          target="_blank"
+          className="text-xs text-sea-500 hover:text-sea-700 dark:text-sea-400 underline"
+        >
+          View Site →
+        </a>
+      </div>
     </header>
   );
 }

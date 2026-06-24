@@ -1,77 +1,60 @@
-import { Star, Waves, TrendingUp } from "lucide-react";
-import { formatPrice, getWhatsAppUrl } from "@/lib/menu-data";
+"use client";
 
-const featured = [
-  {
-    name: "The Seapride Luxury Platter",
-    description: "King crabs, jumbo prawns, lobsters, octopus, grilled fish, exotic red wine — serves up to 20",
-    price: 450000,
-    badge: "Flagship",
-    emoji: "👑",
-  },
-  {
-    name: "Seafarer's Feast",
-    description: "Crabs, prawns, snails, lobster, shrimp, sweet corn — serves 5–10 people",
-    price: 200000,
-    badge: "Popular",
-    emoji: "🎉",
-  },
-  {
-    name: "Cajun Seafood Boil",
-    description: "Assorted seafood drenched in spicy cajun sauce — serves 3–4 people",
-    price: 70000,
-    badge: "Best Seller",
-    emoji: "🌶️",
-  },
-  {
-    name: "Butterfly Prawns",
-    description: "Served with mash potatoes or rice — a customer favorite",
-    price: 25000,
-    badge: "Signature",
-    emoji: "🦐",
-  },
+import { Star, Waves, TrendingUp } from "lucide-react";
+import { formatPrice } from "@/lib/site-config";
+
+const fallbackFeatured = [
+  { name: "The Seapride Luxury Platter", description: "King crabs, jumbo prawns, lobsters, octopus, grilled fish, exotic red wine — serves up to 20", price: 450000, badge: "Flagship", emoji: "👑" },
+  { name: "Seafarer's Feast", description: "Crabs, prawns, snails, lobster, shrimp, sweet corn — serves 5–10 people", price: 200000, badge: "Popular", emoji: "🎉" },
+  { name: "Cajun Seafood Boil", description: "Assorted seafood drenched in spicy cajun sauce — serves 3–4 people", price: 70000, badge: "Best Seller", emoji: "🌶️" },
+  { name: "Butterfly Prawns", description: "Served with mash potatoes or rice — a customer favorite", price: 25000, badge: "Signature", emoji: "🦐" },
 ];
 
-export default function FeaturedDishes() {
+export default function FeaturedDishes({ config }: { config: any }) {
+  const whatsapp = (name: string) =>
+    `https://wa.me/${config.whatsapp_number}?text=${encodeURIComponent(`Hello! I'd like to order the *${name}* from TheSeaPride.`)}`;
+
   return (
-    <section className="py-16 lg:py-24 bg-white">
+    <section className="py-16 lg:py-24 bg-site">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
-          <div className="inline-flex items-center gap-2 bg-sea-50 text-sea-600 px-4 py-1.5 rounded-full text-sm font-medium mb-4">
-            <Star className="w-4 h-4" />
-            Customer Favourites
-          </div>
-          <h2 className="text-3xl lg:text-4xl font-serif font-bold text-sea-900">
-            Most Ordered
+          {config.featured_badge && (
+            <div className="inline-flex items-center gap-2 bg-sea-50 dark:bg-sea-900/30 text-sea-600 dark:text-sea-300 px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+              <Star className="w-4 h-4" />
+              {config.featured_badge}
+            </div>
+          )}
+          <h2 className="text-3xl lg:text-4xl font-serif font-bold text-sea-900 dark:text-white">
+            {config.featured_title}
           </h2>
-          <p className="mt-4 text-sea-600">
-            Our guests can&apos;t get enough of these — tap to order yours now
-          </p>
+          {config.featured_subtitle && (
+            <p className="mt-4 text-sea-600 dark:text-sea-400">{config.featured_subtitle}</p>
+          )}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {featured.map((dish) => (
+          {fallbackFeatured.map((dish) => (
             <div
               key={dish.name}
-              className="group bg-white rounded-2xl border border-sea-100 p-6 hover:shadow-xl hover:shadow-sea-100/50 transition-all duration-300 hover:-translate-y-1 flex flex-col"
+              className="group bg-site rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:shadow-xl hover:shadow-sea-100/50 dark:hover:shadow-gray-900/50 transition-all duration-300 hover:-translate-y-1 flex flex-col"
             >
               <div className="text-4xl mb-4">{dish.emoji}</div>
-              <div className="inline-flex items-center gap-1 bg-sea-50 text-sea-600 text-xs font-semibold px-2.5 py-1 rounded-full mb-3 w-fit">
+              <div className="inline-flex items-center gap-1 bg-sea-50 dark:bg-sea-900/50 text-sea-600 dark:text-sea-300 text-xs font-semibold px-2.5 py-1 rounded-full mb-3 w-fit">
                 <TrendingUp className="w-3 h-3" />
                 {dish.badge}
               </div>
-              <h3 className="text-lg font-serif font-bold text-sea-800 mb-2">
+              <h3 className="text-lg font-serif font-bold text-sea-800 dark:text-sea-200 mb-2">
                 {dish.name}
               </h3>
-              <p className="text-sm text-sea-500 leading-relaxed mb-4 flex-1">
+              <p className="text-sm text-sea-500 dark:text-sea-400 leading-relaxed mb-4 flex-1">
                 {dish.description}
               </p>
-              <div className="flex items-center justify-between pt-2 border-t border-sea-50">
-                <span className="text-xl font-bold text-sea-700">
+              <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-800">
+                <span className="text-xl font-bold text-sea-700 dark:text-sea-300">
                   {formatPrice(dish.price)}
                 </span>
                 <a
-                  href={getWhatsAppUrl(dish.name)}
+                  href={whatsapp(dish.name)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-full transition-all hover:shadow-lg"
@@ -89,7 +72,7 @@ export default function FeaturedDishes() {
         <div className="text-center mt-10">
           <a
             href="/menu"
-            className="inline-flex items-center gap-2 text-sea-600 hover:text-sea-500 font-medium transition-colors"
+            className="inline-flex items-center gap-2 text-sea-600 hover:text-sea-500 dark:text-sea-400 font-medium transition-colors"
           >
             <Waves className="w-4 h-4" />
             Browse Full Menu →

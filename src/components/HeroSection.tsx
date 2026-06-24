@@ -1,31 +1,43 @@
-import Link from "next/link";
-import { Waves, ArrowRight } from "lucide-react";
+"use client";
 
-export default function HeroSection() {
+import Link from "next/link";
+import { ArrowRight, Waves } from "lucide-react";
+
+export default function HeroSection({ config }: { config: any }) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-sea-50 via-white to-ocean-50">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iYSIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIj48cGF0aCBkPSJNMzAgMGwzMCAzME0wIDMwbDMwIDMwTTYwIDMwbDMwIDUwTTMwIDYwbDMwIDMwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwZWE1ZTkiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjA3Ii8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+')] opacity-50" />
+    <section className="relative overflow-hidden bg-gradient-to-br from-sea-50 via-white to-ocean-50 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900">
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iYSIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIj48cGF0aCBkPSJNMzAgMGwzMCAzME0wIDMwbDMwIDMwTTYwIDMwbDMwIDUwTTMwIDYwbDMwIDMwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwZWE1ZTkiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjA3Ii8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+')] opacity-50 dark:opacity-10" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 bg-sea-100 text-sea-700 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
-            <Waves className="w-4 h-4" />
-            Ibadan&apos;s Finest Seafood
-          </div>
+          {config.hero_badge && (
+            <div className="inline-flex items-center gap-2 bg-sea-100 dark:bg-sea-900/50 text-sea-700 dark:text-sea-300 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
+              <Waves className="w-4 h-4" />
+              {config.hero_badge}
+            </div>
+          )}
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-sea-900 leading-tight">
-            Taste the{" "}
-            <span className="text-sea-500">Ocean&apos;s Finest</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-sea-900 dark:text-white leading-tight text-balance">
+            {config.hero_title.includes(config.hero_title_highlight) ? (
+              <>
+                {config.hero_title.split(config.hero_title_highlight)[0]}
+                <span className="text-sea-500">{config.hero_title_highlight}</span>
+                {config.hero_title.split(config.hero_title_highlight)[1]}
+              </>
+            ) : (
+              config.hero_title
+            )}
           </h1>
 
-          <p className="mt-6 text-lg lg:text-xl text-sea-600 max-w-xl leading-relaxed">
-            Premium seafood dining in Ibadan. Fresh catches, bold coastal
-            flavors, and an unforgettable experience — delivered to your door.
-          </p>
+          {config.hero_subtitle && (
+            <p className="mt-6 text-lg lg:text-xl text-sea-600 dark:text-sea-300 max-w-xl leading-relaxed">
+              {config.hero_subtitle}
+            </p>
+          )}
 
           <div className="mt-8 flex flex-wrap gap-4">
             <a
-              href="https://wa.me/2347062270224"
+              href={`https://wa.me/${config.whatsapp_number}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold transition-all hover:shadow-xl"
@@ -36,33 +48,35 @@ export default function HeroSection() {
               Order on WhatsApp
             </a>
             <a
-              href="https://wa.me/2347062270224?text=Hello%21%20I%27d%20like%20to%20make%20a%20reservation%20at%20TheSeaPride."
+              href={`https://wa.me/${config.whatsapp_number}?text=${encodeURIComponent("Hello! I'd like to make a reservation at TheSeaPride.")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border-2 border-sea-300 text-sea-700 hover:border-sea-500 px-6 py-3 rounded-full font-semibold transition-all"
+              className="inline-flex items-center gap-2 border-2 border-sea-300 dark:border-sea-600 text-sea-700 dark:text-sea-300 hover:border-sea-500 px-6 py-3 rounded-full font-semibold transition-all"
             >
               Reserve a Table
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>
 
-          <div className="mt-6 flex items-center gap-4 text-sm text-sea-500">
-            <a
-              href="https://www.instagram.com/the_sea_pride"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 hover:text-pink-500 transition-colors"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-              </svg>
-              Follow @the_sea_pride
-            </a>
+          <div className="mt-6 flex items-center gap-4 text-sm text-sea-500 dark:text-sea-400">
+            {config.instagram_url && (
+              <a
+                href={config.instagram_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 hover:text-pink-500 transition-colors"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                </svg>
+                Follow on Instagram
+              </a>
+            )}
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white/20 dark:from-gray-950/20 to-transparent" />
     </section>
   );
 }
