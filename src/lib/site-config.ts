@@ -82,6 +82,11 @@ export interface SiteConfig {
   testimonial_3_rating: string;
   testimonial_3_image: string;
   featured_items_order: string;
+  testimonials_title: string;
+  testimonials_subtitle: string;
+  gallery_title: string;
+  gallery_subtitle: string;
+  gallery_images: string;
 }
 
 const defaults: SiteConfig = {
@@ -163,6 +168,11 @@ const defaults: SiteConfig = {
   testimonial_3_rating: "5",
   testimonial_3_image: "",
   featured_items_order: "The Seapride Luxury Platter,Seafarer's Feast,Cajun Seafood Boil,Butterfly Prawns",
+  testimonials_title: "What Our Guests Say",
+  testimonials_subtitle: "Real reviews from people who love TheSeaPride",
+  gallery_title: "Our Space",
+  gallery_subtitle: "A glimpse into TheSeaPride experience",
+  gallery_images: "",
 };
 
 let cachedConfig: SiteConfig | null = null;

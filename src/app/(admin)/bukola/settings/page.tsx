@@ -66,6 +66,11 @@ const settingLabels: Record<string, { label: string; type: string; placeholder: 
   featured_title: { label: "Section Title", type: "text", placeholder: "Most Ordered", section: "featured" },
   featured_subtitle: { label: "Subtitle", type: "text", placeholder: "Our guests can't get enough...", section: "featured" },
   featured_items_order: { label: "Featured Items (comma separated)", type: "text", placeholder: "Item 1, Item 2, Item 3, Item 4", section: "featured" },
+  testimonials_title: { label: "Section Title", type: "text", placeholder: "What Our Guests Say", section: "testimonials" },
+  testimonials_subtitle: { label: "Section Subtitle", type: "text", placeholder: "Real reviews from people who love TheSeaPride", section: "testimonials" },
+  gallery_title: { label: "Section Title", type: "text", placeholder: "Our Space", section: "gallery" },
+  gallery_subtitle: { label: "Section Subtitle", type: "text", placeholder: "A glimpse into TheSeaPride experience", section: "gallery" },
+  gallery_images: { label: "Gallery Images (JSON array)", type: "textarea", placeholder: '[{"src":"https://...","alt":"Description"}]', section: "gallery" },
   newsletter_title: { label: "Title", type: "text", placeholder: "Stay in the Loop", section: "newsletter" },
   newsletter_subtitle: { label: "Subtitle", type: "text", placeholder: "Be the first to know...", section: "newsletter" },
   footer_description: { label: "Description", type: "textarea", placeholder: "Premium seafood dining...", section: "footer" },
@@ -74,7 +79,7 @@ const settingLabels: Record<string, { label: string; type: string; placeholder: 
   meta_description: { label: "Meta Description (SEO)", type: "textarea", placeholder: "Experience the finest seafood...", section: "meta" },
 };
 
-const sectionOrder = ["social", "hero", "about", "featured", "about_page", "contact_page", "menu_page", "newsletter", "footer", "meta"];
+const sectionOrder = ["social", "hero", "about", "featured", "about_page", "contact_page", "menu_page", "gallery", "newsletter", "footer", "meta"];
 const sectionLabels: Record<string, string> = {
   social: "Social Media Links",
   hero: "Hero Section",
@@ -83,6 +88,8 @@ const sectionLabels: Record<string, string> = {
   about_page: "About Page",
   contact_page: "Contact Page",
   menu_page: "Menu Page",
+  testimonials: "Testimonials Section",
+  gallery: "Gallery Section",
   newsletter: "Newsletter Section",
   footer: "Footer",
   meta: "SEO / Meta Tags",
@@ -95,6 +102,8 @@ const sectionEmojis: Record<string, string> = {
   about_page: "📄",
   contact_page: "📞",
   menu_page: "🍽️",
+  testimonials: "💬",
+  gallery: "🖼️",
   newsletter: "📬",
   footer: "🦶",
   meta: "🔍",
@@ -325,7 +334,33 @@ export default function SettingsPage() {
         })}
 
         <div className="bg-sea-900/80 border border-sea-800 rounded-2xl p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-200 mb-5">Testimonials</h2>
+          <h2 className="text-lg font-semibold text-gray-200 mb-1 flex items-center gap-2">
+            <span>💬</span>
+            Testimonials Section
+          </h2>
+          <p className="text-sm text-sea-500 mb-5">Section header and individual testimonials</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6 pb-6 border-b border-sea-800">
+            <div>
+              <label className="block text-xs font-medium text-sea-400 mb-1.5">Section Title</label>
+              <input
+                type="text"
+                value={getValue("testimonials_title")}
+                onChange={(e) => setValue("testimonials_title", e.target.value)}
+                placeholder="What Our Guests Say"
+                className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-sea-400 mb-1.5">Section Subtitle</label>
+              <input
+                type="text"
+                value={getValue("testimonials_subtitle")}
+                onChange={(e) => setValue("testimonials_subtitle", e.target.value)}
+                placeholder="Real reviews from people who love TheSeaPride"
+                className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm"
+              />
+            </div>
+          </div>
           {[1, 2, 3].map((i) => (
             <div key={i} className="mb-6 pb-6 border-b border-sea-800 last:border-0 last:mb-0 last:pb-0">
               <h3 className="text-sm font-medium text-gray-300 mb-4">Testimonial #{i}</h3>
