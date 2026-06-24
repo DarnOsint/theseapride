@@ -22,7 +22,12 @@ export async function GET(req: NextRequest) {
     .order("sort_order", { ascending: true })
     .order("id", { ascending: true });
 
-  return NextResponse.json(data || []);
+  const mapped = (data || []).map((cat: any) => ({
+    ...cat,
+    items: cat.menu_items || [],
+  }));
+
+  return NextResponse.json(mapped);
 }
 
 export async function POST(req: NextRequest) {
