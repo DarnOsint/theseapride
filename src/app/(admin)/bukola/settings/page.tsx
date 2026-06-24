@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { Save, Waves } from "lucide-react";
 
 interface Setting {
@@ -26,7 +26,6 @@ const settingLabels: Record<string, { label: string; type: string; placeholder: 
   hero_title: { label: "Title", type: "text", placeholder: "Taste the Ocean's Finest", section: "hero" },
   hero_title_highlight: { label: "Highlight Word", type: "text", placeholder: "Ocean's Finest", section: "hero" },
   hero_subtitle: { label: "Subtitle", type: "text", placeholder: "Premium seafood dining in Ibadan...", section: "hero" },
-  hero_slides: { label: "Slideshow Images", type: "textarea", placeholder: "One URL per line, or JSON array", section: "hero" },
   hero_slides_interval: { label: "Slide Interval (ms)", type: "text", placeholder: "5000", section: "hero" },
   about_page_hero_badge: { label: "Page Badge", type: "text", placeholder: "About Us", section: "about_page" },
   about_page_hero_title: { label: "Page Title", type: "text", placeholder: "Our Story", section: "about_page" },
@@ -150,6 +149,32 @@ export default function SettingsPage() {
   const socialKeys = Object.entries(settingLabels).filter(([, v]) => v.section === "social").map(([k]) => k);
   const activeSocialCount = socialKeys.filter((k) => getValue(k)).length;
 
+  const rawSlides = getValue("hero_slides");
+  const heroSlides = (() => {
+    if (!rawSlides) return [];
+    try { const p = JSON.parse(rawSlides); if (Array.isArray(p)) return p; } catch {}
+    return rawSlides.split("\n").map((s: string) => s.trim()).filter(Boolean);
+  })();
+  const [heroUploading, setHeroUploading] = useState(false);
+
+  async function handleHeroUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setHeroUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+      const data = await res.json();
+      if (data.url) {
+        const next = [...heroSlides, data.url];
+        setValue("hero_slides", JSON.stringify(next));
+      }
+    } catch {}
+    setHeroUploading(false);
+    e.target.value = "";
+  }
+
   if (loading) return (
     <div className="flex items-center justify-center py-32">
       <div className="text-sea-400 text-sm">Loading settings...</div>
@@ -216,14 +241,14 @@ export default function SettingsPage() {
                 </p>
               )}
               {sectionKey === "hero" && (
-                <p className="text-sm text-sea-500 mb-5">
-                  Slideshow images: paste one URL per line. Leave empty for a solid dark background.
-                </p>
-              )}
-              {sectionKey === "hero" && (
-                <p className="text-sm text-sea-400 mb-5">
-                  Add restaurant interior/food images for a professional slideshow background.
-                </p>
+                <>
+                  <p className="text-sm text-sea-500 mb-5">
+                    Add restaurant/food images for the hero background slideshow.
+                  </p>
+                  <p className="text-sm text-sea-400 mb-5">
+                    Images fade automatically. Leave empty for a solid dark background.
+                  </p>
+                </>
               )}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {keys.map((key) => {
@@ -279,6 +304,22 @@ export default function SettingsPage() {
                   );
                 })}
               </div>
+
+              {sectionKey === "hero" && <HeroSlidesUploader
+                slides={heroSlides}
+                uploading={heroUploading}
+                onAdd={handleHeroUpload}
+                onRemove={(i) => {
+                  const next = heroSlides.filter((_: any, idx: number) => idx !== i);
+                  setValue("hero_slides", JSON.stringify(next));
+                }}
+                onReorder={(from, to) => {
+                  const next = [...heroSlides];
+                  const [moved] = next.splice(from, 1);
+                  next.splice(to, 0, moved);
+                  setValue("hero_slides", JSON.stringify(next));
+                }}
+              />}
             </div>
           );
         })}
@@ -336,6 +377,63 @@ export default function SettingsPage() {
           </button>
         </div>
       </form>
+    </div>
+  );
+}
+
+function HeroSlidesUploader({
+  slides, uploading, onAdd, onRemove,
+}: {
+  slides: string[];
+  uploading: boolean;
+  onAdd: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onRemove: (index: number) => void;
+  onReorder: (from: number, to: number) => void;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  return (
+    <div className="mt-6 pt-6 border-t border-sea-800">
+      <h3 className="text-sm font-semibold text-gray-300 mb-3">Hero Slideshow Images</h3>
+      {slides.length === 0 ? (
+        <div className="text-sm text-sea-500 mb-4">No slides yet. Add images for the background slideshow.</div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-4">
+          {slides.map((url, i) => (
+            <div key={url} className="relative group aspect-video rounded-xl overflow-hidden bg-sea-800 border border-sea-700">
+              <img src={url} alt={`Slide ${i + 1}`} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                <button
+                  type="button"
+                  onClick={() => onRemove(i)}
+                  className="p-1.5 bg-red-500/80 hover:bg-red-500 text-white rounded-lg text-xs"
+                  title="Remove"
+                >
+                  <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"/></svg>
+                </button>
+              </div>
+              <div className="absolute bottom-1 left-1 bg-black/60 text-white text-[10px] px-1.5 py-0.5 rounded">
+                {i + 1}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      <div className="flex items-center gap-3">
+        <input ref={inputRef} type="file" accept="image/*" onChange={onAdd} className="hidden" />
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          disabled={uploading}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-sea-700 hover:bg-sea-600 disabled:bg-sea-700/50 text-sea-200 text-sm font-medium transition-colors"
+        >
+          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clipRule="evenodd"/></svg>
+          {uploading ? "Uploading..." : "Add Image"}
+        </button>
+        {slides.length > 0 && (
+          <span className="text-xs text-sea-500">{slides.length} slide{slides.length !== 1 ? "s" : ""}</span>
+        )}
+      </div>
     </div>
   );
 }
