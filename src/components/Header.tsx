@@ -3,7 +3,6 @@
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { Menu, X, Waves } from "lucide-react";
-import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -75,8 +74,6 @@ export default function Header({ config }: { config: any }) {
                 {s.icon}
               </a>
             ))}
-
-            <ThemeToggle />
 
             <nav className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (

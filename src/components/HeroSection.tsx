@@ -1,27 +1,72 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Waves } from "lucide-react";
 
+function parseSlides(raw: string): string[] {
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) return parsed.filter(Boolean);
+  } catch {}
+  return raw.split("\n").map(s => s.trim()).filter(Boolean);
+}
+
 export default function HeroSection({ config }: { config: any }) {
+  const slides = parseSlides(config.hero_slides);
+  const interval = parseInt(config.hero_slides_interval) || 5000;
+  const [current, setCurrent] = useState(0);
+  const hasSlides = slides.length > 0;
+
+  useEffect(() => {
+    if (!hasSlides) return;
+    const id = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, interval);
+    return () => clearInterval(id);
+  }, [hasSlides, interval, slides.length]);
+
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-sea-50 via-white to-ocean-50 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iYSIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIj48cGF0aCBkPSJNMzAgMGwzMCAzME0wIDMwbDMwIDMwTTYwIDMwbDMwIDUwTTMwIDYwbDMwIDMwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwZWE1ZTkiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjA3Ii8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+')] opacity-50 dark:opacity-10" />
+    <section className="relative overflow-hidden bg-sea-900">
+      {hasSlides && (
+        <div className="absolute inset-0">
+          {slides.map((src, i) => (
+            <div
+              key={src}
+              className="absolute inset-0 transition-opacity duration-1000"
+              style={{ opacity: i === current ? 1 : 0 }}
+            >
+              <img
+                src={src}
+                alt=""
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-r from-sea-900/95 via-sea-900/80 to-sea-900/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-sea-950/90 via-transparent to-sea-900/40" />
+        </div>
+      )}
+
+      {!hasSlides && (
+        <div className="absolute inset-0 bg-gradient-to-br from-sea-900 via-sea-800 to-sea-950" />
+      )}
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
         <div className="max-w-3xl">
           {config.hero_badge && (
-            <div className="inline-flex items-center gap-2 bg-sea-100 dark:bg-sea-900/50 text-sea-700 dark:text-sea-300 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 bg-sea-800/60 text-sea-200 px-4 py-1.5 rounded-full text-sm font-medium mb-6 backdrop-blur-sm border border-sea-700/50">
               <Waves className="w-4 h-4" />
               {config.hero_badge}
             </div>
           )}
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-sea-900 dark:text-white leading-tight text-balance">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white leading-tight text-balance">
             {config.hero_title.includes(config.hero_title_highlight) ? (
               <>
                 {config.hero_title.split(config.hero_title_highlight)[0]}
-                <span className="text-sea-500">{config.hero_title_highlight}</span>
+                <span className="text-sea-400">{config.hero_title_highlight}</span>
                 {config.hero_title.split(config.hero_title_highlight)[1]}
               </>
             ) : (
@@ -30,7 +75,7 @@ export default function HeroSection({ config }: { config: any }) {
           </h1>
 
           {config.hero_subtitle && (
-            <p className="mt-6 text-lg lg:text-xl text-sea-600 dark:text-sea-300 max-w-xl leading-relaxed">
+            <p className="mt-6 text-lg lg:text-xl text-sea-200 max-w-xl leading-relaxed">
               {config.hero_subtitle}
             </p>
           )}
@@ -51,20 +96,20 @@ export default function HeroSection({ config }: { config: any }) {
               href={`https://wa.me/${config.whatsapp_number}?text=${encodeURIComponent("Hello! I'd like to make a reservation at TheSeaPride.")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border-2 border-sea-300 dark:border-sea-600 text-sea-700 dark:text-sea-300 hover:border-sea-500 px-6 py-3 rounded-full font-semibold transition-all"
+              className="inline-flex items-center gap-2 border-2 border-sea-400/50 text-sea-200 hover:border-sea-300 hover:text-white px-6 py-3 rounded-full font-semibold transition-all backdrop-blur-sm"
             >
               Reserve a Table
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>
 
-          <div className="mt-6 flex items-center gap-4 text-sm text-sea-500 dark:text-sea-400">
+          <div className="mt-6 flex items-center gap-4 text-sm text-sea-300">
             {config.instagram_url && (
               <a
                 href={config.instagram_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 hover:text-pink-500 transition-colors"
+                className="inline-flex items-center gap-1.5 hover:text-pink-400 transition-colors"
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
@@ -76,7 +121,18 @@ export default function HeroSection({ config }: { config: any }) {
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white/20 dark:from-gray-950/20 to-transparent" />
+      {hasSlides && (
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`w-2 h-2 rounded-full transition-all ${i === current ? "bg-white w-6" : "bg-white/40 hover:bg-white/60"}`}
+              aria-label={`Slide ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

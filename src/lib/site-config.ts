@@ -21,6 +21,8 @@ export interface SiteConfig {
   hero_title: string;
   hero_title_highlight: string;
   hero_subtitle: string;
+  hero_slides: string;
+  hero_slides_interval: string;
   hero_image: string;
   about_title: string;
   about_content: string;
@@ -28,6 +30,36 @@ export interface SiteConfig {
   about_stats_years: string;
   about_stats_dishes: string;
   about_stats_customers: string;
+  about_page_hero_badge: string;
+  about_page_hero_title: string;
+  about_page_hero_subtitle: string;
+  about_page_section_title: string;
+  about_page_paragraphs: string;
+  about_page_location: string;
+  about_values_title: string;
+  about_values_subtitle: string;
+  about_team_title: string;
+  about_team_subtitle: string;
+  about_values: string;
+  about_team: string;
+  about_cta_title: string;
+  contact_hero_badge: string;
+  contact_hero_title: string;
+  contact_hero_subtitle: string;
+  contact_whatsapp_title: string;
+  contact_whatsapp_text: string;
+  contact_visit_title: string;
+  contact_follow_title: string;
+  contact_reserve_title: string;
+  contact_reserve_subtitle: string;
+  contact_reserve_success_title: string;
+  contact_reserve_success_text: string;
+  menu_hero_badge: string;
+  menu_hero_title: string;
+  menu_hero_subtitle: string;
+  menu_whatsapp_badge: string;
+  menu_footer_text: string;
+  menu_footer_cta: string;
   featured_badge: string;
   featured_title: string;
   featured_subtitle: string;
@@ -70,7 +102,39 @@ const defaults: SiteConfig = {
   hero_title: "Taste the Ocean's Finest",
   hero_title_highlight: "Ocean's Finest",
   hero_subtitle: "Premium seafood dining in Ibadan. Fresh catches, bold coastal flavors, and an unforgettable experience — delivered to your door.",
+  hero_slides: "",
+  hero_slides_interval: "5000",
   hero_image: "",
+  about_page_hero_badge: "About Us",
+  about_page_hero_title: "Our Story",
+  about_page_hero_subtitle: "From the coast to your table — a journey of passion, sustainability, and culinary excellence",
+  about_page_section_title: "Where the Ocean Meets the Plate",
+  about_page_paragraphs: "TheSeaPride was born from a simple belief: the best seafood deserves to be celebrated. Based in Ibadan, we bring the ocean's finest catches straight to your door.\n\nEvery morning, our team selects the day's freshest catch. We work directly with sustainable fisheries and local suppliers who share our commitment to quality and ocean conservation.\n\nFrom our signature seafood platters to our handcrafted pastas, every dish reflects our dedication to quality, flavour, and presentation. Simply order via WhatsApp and experience restaurant-quality seafood at home.",
+  about_page_location: "Iyana Anfani, Ringroad, Ibadan",
+  about_values: '[{"icon":"fish","title":"Sustainable Sourcing","description":"We partner with responsible fisheries to ensure our oceans thrive for generations to come."},{"icon":"heart","title":"Crafted with Love","description":"Every dish is prepared with meticulous attention to detail, honouring the natural flavours of the sea."},{"icon":"award","title":"Premium Quality","description":"We source only the finest seafood, prepared by expert chefs trained in coastal cuisine."},{"icon":"users","title":"Exceptional Service","description":"From WhatsApp ordering to doorstep delivery, we make premium seafood accessible."}]',
+  about_team: '[{"name":"Chef Marco Rossi","role":"Executive Chef","bio":"30 years of culinary mastery across Mediterranean and African coasts"},{"name":"Sofia Laurent","role":"Head Sommelier","bio":"Expert pairings from coastal vineyards to complement every dish"},{"name":"Liam O\\u2019Connor","role":"Operations Manager","bio":"Ensuring every order is perfect from kitchen to delivery"}]',
+  about_values_title: "Our Values",
+  about_values_subtitle: "What drives us every day",
+  about_team_title: "Meet Our Team",
+  about_team_subtitle: "The people behind your unforgettable dining experience",
+  about_cta_title: "Ready to Order?",
+  contact_hero_badge: "Contact",
+  contact_hero_title: "Get in Touch",
+  contact_hero_subtitle: "Order, reserve, or just say hello — we're here for you",
+  contact_whatsapp_title: "Order or Reserve via WhatsApp",
+  contact_whatsapp_text: "Fastest response. Send us a message and we'll take it from there.",
+  contact_visit_title: "Visit Us",
+  contact_follow_title: "Follow Us",
+  contact_reserve_title: "Reserve a Table (In-Restaurant)",
+  contact_reserve_subtitle: "Prefer to dine with us? Fill in the form and we'll confirm your reservation.",
+  contact_reserve_success_title: "Reservation Submitted!",
+  contact_reserve_success_text: "Thank you! We'll confirm your reservation shortly.",
+  menu_hero_badge: "Our Menu",
+  menu_hero_title: "Flavors from the Deep",
+  menu_hero_subtitle: "Every dish crafted with the freshest catches. Tap any item to order directly on WhatsApp.",
+  menu_whatsapp_badge: "All orders via WhatsApp — 0706 227 0224",
+  menu_footer_text: "Prices are in Nigerian Naira (₦). All orders are processed via WhatsApp. Delivery available within Ibadan.",
+  menu_footer_cta: "Order Now — 0706 227 0224",
   about_title: "The SeaPride Story",
   about_content: "At TheSeaPride, we are passionate about bringing the freshest seafood to your table. Our journey began with a simple vision: to create a dining experience that captures the essence of coastal living right here in Ibadan. Every dish is crafted with care, using the finest ingredients sourced from trusted suppliers. From our signature seafood platters to our delicate starters, each bite tells a story of quality, tradition, and innovation. We believe that great food brings people together, and we are honored to be part of your special moments — whether it's a family celebration, a romantic dinner, or a casual gathering with friends.",
   about_image: "",

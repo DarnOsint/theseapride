@@ -54,7 +54,6 @@ body {
   font-family: var(--font-sans);
   color: var(--text-primary);
   background-color: var(--bg-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .font-serif {

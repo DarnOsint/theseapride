@@ -1,7 +1,5 @@
 import { isAuthenticated, logout } from "@/lib/admin-auth";
 import { redirect } from "next/navigation";
-import AdminThemeToggle from "./AdminThemeToggle";
-
 export default async function BukolaLayout({ children }: { children: React.ReactNode }) {
   const authed = await isAuthenticated();
 
@@ -81,7 +79,6 @@ function AdminTopBar() {
         <h2 className="text-lg font-semibold text-gray-200">Welcome, Bukola</h2>
       </div>
       <div className="flex items-center gap-4">
-        <AdminThemeToggle />
         <a
           href="/"
           target="_blank"

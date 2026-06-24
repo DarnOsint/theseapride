@@ -45,16 +45,16 @@ export default function FeaturedDishes({ config, menuData }: { config: any; menu
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
           {config.featured_badge && (
-            <div className="inline-flex items-center gap-2 bg-sea-50 dark:bg-sea-900/30 text-sea-600 dark:text-sea-300 px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+            <div className="inline-flex items-center gap-2 bg-sea-800/40 text-sea-300 px-4 py-1.5 rounded-full text-sm font-medium mb-4">
               <Star className="w-4 h-4" />
               {config.featured_badge}
             </div>
           )}
-          <h2 className="text-3xl lg:text-4xl font-serif font-bold text-sea-900 dark:text-white">
+          <h2 className="text-3xl lg:text-4xl font-serif font-bold text-site">
             {config.featured_title}
           </h2>
           {config.featured_subtitle && (
-            <p className="mt-4 text-sea-600 dark:text-sea-400">{config.featured_subtitle}</p>
+            <p className="mt-4 text-site-secondary">{config.featured_subtitle}</p>
           )}
         </div>
 
@@ -62,21 +62,21 @@ export default function FeaturedDishes({ config, menuData }: { config: any; menu
           {displayItems.map((dish: any, index: number) => (
             <div
               key={dish.name + index}
-              className="group bg-site rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:shadow-xl hover:shadow-sea-100/50 dark:hover:shadow-gray-900/50 transition-all duration-300 hover:-translate-y-1 flex flex-col"
+              className="group bg-card-bg rounded-2xl border border-card-border p-6 hover:shadow-xl hover:shadow-sea-900/30 transition-all duration-300 hover:-translate-y-1 flex flex-col"
             >
               <div className="text-4xl mb-4">{dish.categoryIcon || "🍽️"}</div>
-              <div className="inline-flex items-center gap-1 bg-sea-50 dark:bg-sea-900/50 text-sea-600 dark:text-sea-300 text-xs font-semibold px-2.5 py-1 rounded-full mb-3 w-fit">
+              <div className="inline-flex items-center gap-1 bg-sea-800/40 text-sea-300 text-xs font-semibold px-2.5 py-1 rounded-full mb-3 w-fit">
                 <TrendingUp className="w-3 h-3" />
                 {dish.categoryName || "Featured"}
               </div>
-              <h3 className="text-lg font-serif font-bold text-sea-800 dark:text-sea-200 mb-2">
+              <h3 className="text-lg font-serif font-bold text-site mb-2">
                 {dish.name}
               </h3>
-              <p className="text-sm text-sea-500 dark:text-sea-400 leading-relaxed mb-4 flex-1">
+              <p className="text-sm text-site-secondary leading-relaxed mb-4 flex-1">
                 {dish.description || (dish.includes?.length > 0 ? dish.includes.join(", ") : "") || "Premium seafood"}
               </p>
-              <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-800">
-                <span className="text-xl font-bold text-sea-700 dark:text-sea-300">
+              <div className="flex items-center justify-between pt-2 border-t border-card-border">
+                <span className="text-xl font-bold text-sea-400">
                   {formatPrice(dish.price)}
                 </span>
                 <a
@@ -98,7 +98,7 @@ export default function FeaturedDishes({ config, menuData }: { config: any; menu
         <div className="text-center mt-10">
           <a
             href="/menu"
-            className="inline-flex items-center gap-2 text-sea-600 hover:text-sea-500 dark:text-sea-400 font-medium transition-colors"
+            className="inline-flex items-center gap-2 text-site-secondary hover:text-sea-400 font-medium transition-colors"
           >
             <Waves className="w-4 h-4" />
             Browse Full Menu →

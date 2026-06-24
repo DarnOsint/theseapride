@@ -109,7 +109,7 @@ export default function MenuEditorPage() {
       name: formData.get("name"),
       icon: formData.get("icon"),
       note: formData.get("note") || "",
-      image: formData.get("image_url") as string || editingCat?.image || "",
+      image: editingCat?.image || "",
     };
 
     if (editingCat) data.id = editingCat.id;
@@ -145,7 +145,7 @@ export default function MenuEditorPage() {
       description: formData.get("description") || "",
       includes: includesRaw.split(",").map((s: string) => s.trim()).filter(Boolean),
       serves: formData.get("serves") || "",
-      image: formData.get("image_url") as string || editingItem?.image || "",
+      image: editingItem?.image || "",
     };
 
     if (editingItem) data.id = editingItem.id;
@@ -304,7 +304,6 @@ export default function MenuEditorPage() {
           {showCatForm && (
             <FormCard title={editingCat ? "Edit Category" : "New Category"} onClose={() => { setShowCatForm(false); setEditingCat(null); }}>
               <form onSubmit={saveCategory} className="space-y-4">
-                <input type="hidden" name="image_url" value={editingCat?.image || ""} />
                 <div>
                   <label className="block text-xs font-medium text-sea-400 mb-1">Name</label>
                   <input name="name" defaultValue={editingCat?.name || ""} required className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm" />
@@ -318,11 +317,12 @@ export default function MenuEditorPage() {
                   <input name="note" defaultValue={editingCat?.note || ""} className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-sea-400 mb-1">Current Image URL</label>
-                  <input name="image_url" defaultValue={editingCat?.image || ""} className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm" />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-sea-400 mb-1">Upload New Image</label>
+                  <label className="block text-xs font-medium text-sea-400 mb-1">Image</label>
+                  {editingCat?.image && (
+                    <div className="mb-2">
+                      <img src={editingCat.image} alt="" className="w-20 h-20 rounded-xl object-cover border border-sea-700" />
+                    </div>
+                  )}
                   <input type="file" name="image" accept="image/*" className="w-full text-sm text-sea-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-sea-700 file:text-sea-200 file:text-sm file:font-medium hover:file:bg-sea-600" />
                   {uploading && <p className="text-xs text-sea-400 mt-1">Uploading...</p>}
                 </div>
@@ -341,7 +341,6 @@ export default function MenuEditorPage() {
           {showItemForm && (
             <FormCard title={editingItem ? "Edit Item" : "New Item"} onClose={() => { setShowItemForm(false); setEditingItem(null); }}>
               <form onSubmit={saveItem} className="space-y-3">
-                <input type="hidden" name="image_url" value={editingItem?.image || ""} />
                 <div>
                   <label className="block text-xs font-medium text-sea-400 mb-1">Category</label>
                   <select name="category_id" defaultValue={selectedCatId || editingItem?.category_id || ""} required className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm">
@@ -369,11 +368,12 @@ export default function MenuEditorPage() {
                   <input name="serves" defaultValue={editingItem?.serves || ""} className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm" placeholder="3–4 People" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-sea-400 mb-1">Current Image URL</label>
-                  <input name="image_url" defaultValue={editingItem?.image || ""} className="w-full px-3 py-2.5 rounded-xl bg-sea-800/50 border border-sea-700 text-gray-200 placeholder-sea-500 focus:border-sea-500 focus:ring-2 focus:ring-sea-500/20 outline-none text-sm" />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-sea-400 mb-1">Upload New Image</label>
+                  <label className="block text-xs font-medium text-sea-400 mb-1">Image</label>
+                  {editingItem?.image && (
+                    <div className="mb-2">
+                      <img src={editingItem.image} alt="" className="w-20 h-20 rounded-xl object-cover border border-sea-700" />
+                    </div>
+                  )}
                   <input type="file" name="image" accept="image/*" className="w-full text-sm text-sea-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-sea-700 file:text-sea-200 file:text-sm file:font-medium hover:file:bg-sea-600" />
                   {uploading && <p className="text-xs text-sea-400 mt-1">Uploading...</p>}
                 </div>
