@@ -1,7 +1,8 @@
 "use client";
 
 import { Star, Waves, TrendingUp } from "lucide-react";
-import { formatPrice } from "@/lib/site-config";
+import { formatPrice } from "@/lib/menu-config";
+import type { MenuCategory } from "@/lib/menu-config";
 
 const fallbackFeatured = [
   { name: "The Seapride Luxury Platter", description: "King crabs, jumbo prawns, lobsters, octopus, grilled fish, exotic red wine — serves up to 20", price: 450000, badge: "Flagship", emoji: "👑" },
@@ -10,9 +11,34 @@ const fallbackFeatured = [
   { name: "Butterfly Prawns", description: "Served with mash potatoes or rice — a customer favorite", price: 25000, badge: "Signature", emoji: "🦐" },
 ];
 
-export default function FeaturedDishes({ config }: { config: any }) {
+export default function FeaturedDishes({ config, menuData }: { config: any; menuData: MenuCategory[] }) {
   const whatsapp = (name: string) =>
     `https://wa.me/${config.whatsapp_number}?text=${encodeURIComponent(`Hello! I'd like to order the *${name}* from TheSeaPride.`)}`;
+
+  const featuredNames = (config.featured_items_order || "")
+    .split(",")
+    .map((s: string) => s.trim())
+    .filter(Boolean);
+
+  const safeMenu = menuData?.filter(cat => cat?.items?.length > 0) || [];
+
+  const featuredItems = featuredNames.length > 0
+    ? featuredNames.map((name: string) => {
+        for (const cat of safeMenu) {
+          const item = cat.items.find((i) => i.name === name);
+          if (item) return { ...item, categoryName: cat.name, categoryIcon: cat.icon };
+        }
+        return null;
+      }).filter(Boolean)
+    : [];
+
+  const displayItems = featuredItems.length >= 4
+    ? featuredItems
+    : safeMenu.length > 0
+      ? safeMenu.flatMap((cat) =>
+          cat.items.slice(0, 2).map((item) => ({ ...item, categoryName: cat.name, categoryIcon: cat.icon }))
+        ).slice(0, 4)
+      : fallbackFeatured;
 
   return (
     <section className="py-16 lg:py-24 bg-site">
@@ -33,21 +59,21 @@ export default function FeaturedDishes({ config }: { config: any }) {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {fallbackFeatured.map((dish) => (
+          {displayItems.map((dish: any, index: number) => (
             <div
-              key={dish.name}
+              key={dish.name + index}
               className="group bg-site rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:shadow-xl hover:shadow-sea-100/50 dark:hover:shadow-gray-900/50 transition-all duration-300 hover:-translate-y-1 flex flex-col"
             >
-              <div className="text-4xl mb-4">{dish.emoji}</div>
+              <div className="text-4xl mb-4">{dish.categoryIcon || "🍽️"}</div>
               <div className="inline-flex items-center gap-1 bg-sea-50 dark:bg-sea-900/50 text-sea-600 dark:text-sea-300 text-xs font-semibold px-2.5 py-1 rounded-full mb-3 w-fit">
                 <TrendingUp className="w-3 h-3" />
-                {dish.badge}
+                {dish.categoryName || "Featured"}
               </div>
               <h3 className="text-lg font-serif font-bold text-sea-800 dark:text-sea-200 mb-2">
                 {dish.name}
               </h3>
               <p className="text-sm text-sea-500 dark:text-sea-400 leading-relaxed mb-4 flex-1">
-                {dish.description}
+                {dish.description || (dish.includes?.length > 0 ? dish.includes.join(", ") : "") || "Premium seafood"}
               </p>
               <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-800">
                 <span className="text-xl font-bold text-sea-700 dark:text-sea-300">

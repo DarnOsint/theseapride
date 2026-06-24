@@ -1,7 +1,9 @@
 import { Waves } from "lucide-react";
-import { menuData, formatPrice, getWhatsAppUrl } from "@/lib/menu-data";
+import { getMenuData, getWhatsAppUrl, formatPrice } from "@/lib/menu-config";
 
-export default function MenuPage() {
+export default async function MenuPage() {
+  const menuData = await getMenuData();
+
   return (
     <>
       <section className="bg-gradient-to-br from-sea-50 via-white to-ocean-50 py-16 lg:py-24">
@@ -29,7 +31,7 @@ export default function MenuPage() {
       <section className="py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           {menuData.map((category) => (
-            <div key={category.name}>
+            <div key={category.id}>
               <div className="flex items-center gap-3 mb-8">
                 <span className="text-3xl">{category.icon}</span>
                 <h2 className="text-2xl lg:text-3xl font-serif font-bold text-sea-800">
@@ -46,7 +48,7 @@ export default function MenuPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {category.items.map((item) => (
                   <div
-                    key={item.name}
+                    key={item.id}
                     className="group flex flex-col sm:flex-row rounded-xl border border-sea-100 overflow-hidden hover:border-sea-200 hover:shadow-md transition-all"
                   >
                     {item.image && (
@@ -69,7 +71,7 @@ export default function MenuPage() {
                             {formatPrice(item.price)}
                           </span>
                         </div>
-                        {item.includes && (
+                        {item.includes && item.includes.length > 0 && (
                           <details className="mt-1.5">
                             <summary className="text-xs text-sea-400 hover:text-sea-500 cursor-pointer">
                               What&apos;s included
