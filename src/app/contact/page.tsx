@@ -25,6 +25,11 @@ export default function ContactPage() {
     e.preventDefault();
     setLoading(true);
     try {
+      if (!supabase) {
+        console.log("Reservation (no Supabase configured):", form);
+        setSubmitted(true);
+        return;
+      }
       const { error } = await supabase.from("reservations").insert([
         {
           name: form.name,
