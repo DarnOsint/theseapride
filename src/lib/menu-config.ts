@@ -86,7 +86,7 @@ export async function getMenuData(): Promise<MenuCategory[]> {
         name: item.name,
         price: item.price,
         description: item.description || "",
-        includes: item.includes || [],
+        includes: toArray(item.includes),
         serves: item.serves || "",
         image: item.image || "",
         sort_order: item.sort_order,
@@ -99,6 +99,14 @@ export async function getMenuData(): Promise<MenuCategory[]> {
   } catch {
     return toCategories(hardcodedMenu);
   }
+}
+
+function toArray(val: unknown): string[] {
+  if (Array.isArray(val)) return val;
+  if (typeof val === "string") {
+    try { return JSON.parse(val); } catch { return val.split(",").map(s => s.trim()).filter(Boolean); }
+  }
+  return [];
 }
 
 function toCategories(hardcoded: typeof hardcodedMenu): MenuCategory[] {
@@ -117,7 +125,7 @@ function toCategories(hardcoded: typeof hardcodedMenu): MenuCategory[] {
         name: item.name,
         price: item.price,
         description: item.description || "",
-        includes: item.includes || [],
+        includes: toArray(item.includes),
         serves: item.serves || "",
         image: item.image || "",
         sort_order: idx,

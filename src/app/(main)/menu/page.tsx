@@ -71,7 +71,7 @@ export default async function MenuPage() {
                             {formatPrice(item.price)}
                           </span>
                         </div>
-                        {item.includes && item.includes.length > 0 && (
+                        {Array.isArray(item.includes) && item.includes.length > 0 && (
                           <details className="mt-1.5">
                             <summary className="text-xs text-sea-400 hover:text-sea-500 cursor-pointer">
                               What&apos;s included
