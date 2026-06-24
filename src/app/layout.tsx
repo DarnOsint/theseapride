@@ -17,9 +17,10 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "TheSeaPride | Premium Seafood Restaurant",
   description:
-    "Experience the finest seafood dining at TheSeaPride. Fresh catches, bold flavors, and unforgettable coastal cuisine in Lagos.",
+    "Experience the finest seafood dining at TheSeaPride. Fresh catches, bold flavors, and unforgettable coastal cuisine in Ibadan.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.svg",
+    apple: "/apple-touch-icon.svg",
   },
 };
 

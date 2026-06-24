@@ -35,13 +35,15 @@ export default function HeroSection() {
               </svg>
               Order on WhatsApp
             </a>
-            <Link
-              href="/menu"
+            <a
+              href="https://wa.me/2347062270224?text=Hello%21%20I%27d%20like%20to%20make%20a%20reservation%20at%20TheSeaPride."
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 border-2 border-sea-300 text-sea-700 hover:border-sea-500 px-6 py-3 rounded-full font-semibold transition-all"
             >
-              View Menu
+              Reserve a Table
               <ArrowRight className="w-4 h-4" />
-            </Link>
+            </a>
           </div>
 
           <div className="mt-6 flex items-center gap-4 text-sm text-sea-500">

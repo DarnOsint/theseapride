@@ -4,28 +4,36 @@ export interface MenuItem {
   description?: string;
   includes?: string[];
   serves?: string;
+  image?: string;
 }
 
 export interface MenuCategory {
   name: string;
   icon: string;
   note?: string;
+  image?: string;
   items: MenuItem[];
 }
+
+const IMG = (id: string) =>
+  `https://images.unsplash.com/${id}?w=600&h=400&fit=crop`;
 
 export const menuData: MenuCategory[] = [
   {
     name: "Breakfast",
     icon: "🌅",
+    image: IMG("photo-1533089860892-a7c6f0a38266"),
     items: [
       {
         name: "Full English Breakfast",
         price: 20000,
+        image: IMG("photo-1533089860892-a7c6f0a38266"),
         includes: ["Sausage", "Bacon", "Baked Beans", "Egg", "Toast Bread", "Grilled Tomatoes", "Mushroom"],
       },
       {
         name: "Luxury Seapride",
         price: 25000,
+        image: IMG("photo-1551218808-94e220e084d2"),
         includes: ["Potato Sauté", "Yam Chips", "Broccoli", "Mini Club Sandwich", "Sausage", "Smoked Titus Seafood Sauce", "Grilled Prawns"],
       },
       {
@@ -36,6 +44,7 @@ export const menuData: MenuCategory[] = [
       {
         name: "Deluxe Breakfast",
         price: 25000,
+        image: IMG("photo-1551218808-94e220e084d2"),
         includes: ["Pancake", "Waffle", "Scrambled Egg", "Hot Dog Sausage", "Baked Beans"],
       },
       {
@@ -48,15 +57,18 @@ export const menuData: MenuCategory[] = [
   {
     name: "Starters",
     icon: "🥗",
+    image: IMG("photo-1546069901-ba9599a7e63c"),
     items: [
       {
         name: "Prawn Cocktail Salad",
         price: 20000,
+        image: IMG("photo-1546069901-ba9599a7e63c"),
         includes: ["Grilled Prawns", "Lettuce", "Cucumber", "Fresh Tomatoes", "Cocktail Sauce"],
       },
       {
         name: "Salmon Fish Salad",
         price: 25000,
+        image: IMG("photo-1546069901-ba9599a7e63c"),
         includes: ["Grilled Salmon Fish", "Lettuce", "Lime", "Fresh Tomatoes", "Runner Beans"],
       },
       {
@@ -74,15 +86,18 @@ export const menuData: MenuCategory[] = [
   {
     name: "Soups",
     icon: "🍜",
+    image: IMG("photo-1547592166-23ac45744acd"),
     items: [
       {
         name: "Ministro Soup",
         price: 15000,
+        image: IMG("photo-1547592166-23ac45744acd"),
         includes: ["Shrimps", "Carrot", "Baby Marrow", "Noodles", "Tomato Paste"],
       },
       {
         name: "Asian Sea Broth",
         price: 20000,
+        image: IMG("photo-1547592166-23ac45744acd"),
         includes: ["Carrot", "Prawns", "Crabs", "Marrow", "Leeks", "Macaroni"],
       },
     ],
@@ -90,40 +105,47 @@ export const menuData: MenuCategory[] = [
   {
     name: "Seafood Platters",
     icon: "🦞",
+    image: IMG("photo-1559737558-2f5a35f4523b"),
     items: [
       {
         name: "Catch of the Bite",
         price: 20000,
+        image: IMG("photo-1559737558-2f5a35f4523b"),
         includes: ["Crabs", "Prawns", "Snails"],
         serves: "1–2 People",
       },
       {
         name: "Seaside Nibbles",
         price: 50000,
+        image: IMG("photo-1604503468506-a8da13d82791"),
         includes: ["Crabs", "Prawns", "Snails", "Lobsters"],
         serves: "3–4 People",
       },
       {
         name: "Cajun Seafood Boil",
         price: 70000,
+        image: IMG("photo-1559737558-2f5a35f4523b"),
         includes: ["Assorted Seafood", "Cajun Sauce"],
         serves: "3–4 People",
       },
       {
         name: "Sea's Bounty Platter",
         price: 100000,
+        image: IMG("photo-1604503468506-a8da13d82791"),
         includes: ["Crabs", "Prawns", "Snails", "Calamari", "Lobster", "Potatoes", "Sweet Corn", "Free Drink"],
         serves: "4–6 People",
       },
       {
         name: "Seafarer's Feast",
         price: 200000,
+        image: IMG("photo-1559737558-2f5a35f4523b"),
         includes: ["Crabs", "Prawns", "Snails", "Shrimps", "Lobster", "Sweet Corn", "Potatoes", "Egg", "2 Canned Drinks"],
         serves: "5–10 People",
       },
       {
         name: "The Seapride Luxury Platter",
         price: 450000,
+        image: IMG("photo-1604503468506-a8da13d82791"),
         includes: ["King Crabs", "Jumbo Prawns", "Large Snails", "Lobsters", "Octopus", "Potatoes", "Sweet Corn", "Shrimps", "Calamari", "Basket of Fries", "Rice", "Pasta", "Singapore Noodles", "Grilled Fish", "Exotic Red Wine"],
         serves: "Up to 20 People",
       },
@@ -132,6 +154,7 @@ export const menuData: MenuCategory[] = [
   {
     name: "Finger Food",
     icon: "🍤",
+    image: IMG("photo-1621996346565-e3dbc646d9a9"),
     items: [
       {
         name: "Mayo Spring Roll",
@@ -141,11 +164,13 @@ export const menuData: MenuCategory[] = [
       {
         name: "Small Chops Platter",
         price: 25000,
+        image: IMG("photo-1621996346565-e3dbc646d9a9"),
         includes: ["Puff Puff", "Samosa", "Mayo Spring Roll", "Snail", "Prawn (Grilled)"],
       },
       {
         name: "Spicy Mixed Seafood",
         price: 30000,
+        image: IMG("photo-1551218808-94e220e084d2"),
         includes: ["Snail", "Crabs", "Prawns", "Fish", "Cream Fish", "Hot Chilli Sauce"],
       },
       {
@@ -156,6 +181,7 @@ export const menuData: MenuCategory[] = [
       {
         name: "Special Platter",
         price: 60000,
+        image: IMG("photo-1621996346565-e3dbc646d9a9"),
         includes: ["Butterfly Prawns", "Prawn in Iakette", "Fish in Batter", "Pepper Snail", "Fries", "Chinese Rice"],
       },
     ],
@@ -163,15 +189,18 @@ export const menuData: MenuCategory[] = [
   {
     name: "Rice",
     icon: "🍚",
+    image: IMG("photo-1512058564366-18510be2db19"),
     items: [
       {
         name: "Italian Risotto Rice",
         price: 20000,
+        image: IMG("photo-1512058564366-18510be2db19"),
         includes: ["Shrimps", "Calamari", "Prawn", "Cream Fish Fillet", "Seasoning"],
       },
       {
         name: "Jambalaya Rice",
         price: 25000,
+        image: IMG("photo-1563379926898-05f4575a45d8"),
         includes: ["Shredded Chicken", "Shredded Beef", "Sausage", "Shrimps", "Prawns", "Calamari"],
       },
       {
@@ -199,9 +228,10 @@ export const menuData: MenuCategory[] = [
   {
     name: "Pasta",
     icon: "🍝",
+    image: IMG("photo-1563379926898-05f4575a45d8"),
     items: [
-      { name: "Pesto Creamy Pasta", price: 20000 },
-      { name: "Seafood Marinara Pasta", price: 20000 },
+      { name: "Pesto Creamy Pasta", price: 20000, image: IMG("photo-1563379926898-05f4575a45d8") },
+      { name: "Seafood Marinara Pasta", price: 20000, image: IMG("photo-1563379926898-05f4575a45d8") },
       { name: "Seafood Alfredo Pasta", price: 20000 },
       { name: "Italian Seafood Pasta", price: 20000 },
       { name: "Singapore Noodles", price: 15000 },
@@ -213,8 +243,9 @@ export const menuData: MenuCategory[] = [
     name: "African Soups",
     icon: "🥘",
     note: "Comes with free swallow",
+    image: IMG("photo-1547592166-23ac45744acd"),
     items: [
-      { name: "Fisherman Soup", price: 20000 },
+      { name: "Fisherman Soup", price: 20000, image: IMG("photo-1547592166-23ac45744acd") },
       { name: "Seafood Okro", price: 15000 },
       { name: "Seafood Efo Riro", price: 15000 },
       { name: "Seafood Egusi", price: 15000 },
@@ -226,12 +257,13 @@ export const menuData: MenuCategory[] = [
   {
     name: "Special Grilled",
     icon: "🥩",
+    image: IMG("photo-1544025162-d76694265947"),
     items: [
-      { name: "T-Bone Steak", price: 20000 },
-      { name: "BBQ Croaker Fish", price: 20000 },
+      { name: "T-Bone Steak", price: 20000, image: IMG("photo-1544025162-d76694265947") },
+      { name: "BBQ Croaker Fish", price: 20000, image: IMG("photo-1519708227418-c8fd9a32b7a2") },
       { name: "Pillet Steak", price: 20000 },
-      { name: "Butterfly Prawns with Mash Potatoes or Rice", price: 25000 },
-      { name: "Tilapia Fish, BBQ & French Fries", price: 20000 },
+      { name: "Butterfly Prawns with Mash Potatoes or Rice", price: 25000, image: IMG("photo-1551218808-94e220e084d2") },
+      { name: "Tilapia Fish, BBQ & French Fries", price: 20000, image: IMG("photo-1519708227418-c8fd9a32b7a2") },
       { name: "BBQ Catfish", price: 20000 },
       { name: "Chicken Cordon Bleu", price: 20000 },
     ],
@@ -239,8 +271,9 @@ export const menuData: MenuCategory[] = [
   {
     name: "Wraps",
     icon: "🌯",
+    image: IMG("photo-1615361200141-f45040a367be"),
     items: [
-      { name: "Seafood Shawarma", price: 7000 },
+      { name: "Seafood Shawarma", price: 7000, image: IMG("photo-1615361200141-f45040a367be") },
       { name: "Tortilla Wrap", price: 8000 },
       { name: "Burger", price: 7000 },
       { name: "Pan Cake Wrap", price: 6000 },
@@ -249,6 +282,7 @@ export const menuData: MenuCategory[] = [
   {
     name: "Sauces & Dips",
     icon: "🧂",
+    image: IMG("photo-1476124369491-e7addf5db371"),
     items: [
       { name: "Lip Smacking Sauce", price: 3000 },
       { name: "Tartar Sauce", price: 3000 },
@@ -261,11 +295,12 @@ export const menuData: MenuCategory[] = [
   {
     name: "Extras",
     icon: "➕",
+    image: IMG("photo-1504674900247-0877df9cc836"),
     items: [
-      { name: "Potatoes (Fried)", price: 1000 },
-      { name: "Extra Prawns (3pcs)", price: 12000 },
+      { name: "Potatoes (Fried)", price: 1000, image: IMG("photo-1504674900247-0877df9cc836") },
+      { name: "Extra Prawns (3pcs)", price: 12000, image: IMG("photo-1551218808-94e220e084d2") },
       { name: "Plantain", price: 1000 },
-      { name: "Extra Crabs (2pcs)", price: 8000 },
+      { name: "Extra Crabs (2pcs)", price: 8000, image: IMG("photo-1604503468506-a8da13d82791") },
       { name: "Sweet Corn", price: 1500 },
       { name: "Extra Snails (3pcs)", price: 12000 },
       { name: "Yam (Fried)", price: 1000 },
@@ -281,6 +316,13 @@ const WHATSAPP_NUMBER = "2347062270224";
 export function getWhatsAppUrl(itemName: string): string {
   const text = encodeURIComponent(
     `Hello! I'd like to order the *${itemName}* from TheSeaPride.`
+  );
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+}
+
+export function getWhatsAppGenericUrl(): string {
+  const text = encodeURIComponent(
+    "Hello! I'd like to place an order at TheSeaPride."
   );
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
 }
