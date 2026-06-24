@@ -1,12 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { createClient } from "@supabase/supabase-js";
-import { Plus, Edit3, Trash2, ChevronDown, ChevronRight, Upload, X, GripVertical } from "lucide-react";
-import { useRouter } from "next/navigation";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+import { Plus, Edit3, Trash2, ChevronDown, ChevronRight, X } from "lucide-react";
 
 interface MenuCategory {
   id: number;
@@ -30,8 +25,16 @@ interface MenuItem {
   sort_order: number;
 }
 
+async function api(action: string, data?: any) {
+  const res = await fetch("/api/admin", {
+    method: data ? "POST" : "GET",
+    headers: { "Content-Type": "application/json" },
+    body: data ? JSON.stringify({ action, ...data }) : undefined,
+  });
+  return res.json();
+}
+
 export default function MenuEditorPage() {
-  const router = useRouter();
   const [categories, setCategories] = useState<MenuCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
@@ -40,23 +43,13 @@ export default function MenuEditorPage() {
   const [showCatForm, setShowCatForm] = useState(false);
   const [showItemForm, setShowItemForm] = useState(false);
   const [selectedCatId, setSelectedCatId] = useState<number | null>(null);
-  const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const sb = createClient(supabaseUrl, supabaseAnonKey);
-
   const fetchData = useCallback(async () => {
-    const { data: cats } = await sb.from("menu_categories").select("*").order("sort_order").order("id");
-    const { data: items } = await sb.from("menu_items").select("*").order("sort_order").order("id");
-
-    if (cats) {
-      const grouped = cats.map((cat: any) => ({
-        ...cat,
-        items: (items || []).filter((i: any) => i.category_id === cat.id) as MenuItem[],
-      }));
-      setCategories(grouped);
-    }
+    const data = await api("get_all");
+    if (Array.isArray(data)) setCategories(data);
     setLoading(false);
   }, []);
 
@@ -71,18 +64,20 @@ export default function MenuEditorPage() {
     });
   };
 
+  function showMsg(msg: string) {
+    setMessage(msg);
+    setTimeout(() => setMessage(""), 3000);
+  }
+
   async function uploadImage(file: File): Promise<string> {
     setUploading(true);
-    const ext = file.name.split(".").pop();
-    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-    const { data, error } = await sb.storage.from("admin-images").upload(fileName, file, {
-      cacheControl: "3600",
-      upsert: false,
-    });
-    if (error) throw error;
-    const { data: urlData } = sb.storage.from("admin-images").getPublicUrl(fileName);
+    const formData = new FormData();
+    formData.append("file", file);
+    const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+    const data = await res.json();
     setUploading(false);
-    return urlData.publicUrl;
+    if (data.error) throw new Error(data.error);
+    return data.url;
   }
 
   async function saveCategory(e: React.FormEvent) {
@@ -90,32 +85,29 @@ export default function MenuEditorPage() {
     setSaving(true);
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
+
     const data: any = {
+      action: "upsert_category",
       name: formData.get("name"),
       icon: formData.get("icon"),
       note: formData.get("note") || "",
       image: formData.get("image_url") as string || editingCat?.image || "",
     };
 
+    if (editingCat) data.id = editingCat.id;
+
     try {
       const imageFile = formData.get("image") as File;
       if (imageFile?.size > 0) {
         data.image = await uploadImage(imageFile);
       }
-
-      if (editingCat) {
-        await sb.from("menu_categories").update(data).eq("id", editingCat.id);
-      } else {
-        data.sort_order = categories.length;
-        await sb.from("menu_categories").insert(data);
-      }
+      await api("upsert_category", data);
       setShowCatForm(false);
       setEditingCat(null);
       fetchData();
-      setMessage(editingCat ? "Category updated!" : "Category created!");
-      setTimeout(() => setMessage(""), 3000);
+      showMsg(editingCat ? "Category updated!" : "Category created!");
     } catch (err: any) {
-      setMessage("Error: " + err.message);
+      showMsg("Error: " + err.message);
     }
     setSaving(false);
   }
@@ -125,8 +117,10 @@ export default function MenuEditorPage() {
     setSaving(true);
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
+
     const includesRaw = (formData.get("includes") as string) || "";
     const data: any = {
+      action: "upsert_item",
       category_id: parseInt(formData.get("category_id") as string),
       name: formData.get("name"),
       price: parseInt(formData.get("price") as string) || 0,
@@ -136,43 +130,36 @@ export default function MenuEditorPage() {
       image: formData.get("image_url") as string || editingItem?.image || "",
     };
 
+    if (editingItem) data.id = editingItem.id;
+
     try {
       const imageFile = formData.get("image") as File;
       if (imageFile?.size > 0) {
         data.image = await uploadImage(imageFile);
       }
-
-      if (editingItem) {
-        await sb.from("menu_items").update(data).eq("id", editingItem.id);
-      } else {
-        data.sort_order = categories.find(c => c.id === data.category_id)?.items.length || 0;
-        await sb.from("menu_items").insert(data);
-      }
+      await api("upsert_item", data);
       setShowItemForm(false);
       setEditingItem(null);
       fetchData();
-      setMessage(editingItem ? "Item updated!" : "Item created!");
-      setTimeout(() => setMessage(""), 3000);
+      showMsg(editingItem ? "Item updated!" : "Item created!");
     } catch (err: any) {
-      setMessage("Error: " + err.message);
+      showMsg("Error: " + err.message);
     }
     setSaving(false);
   }
 
   async function deleteCategory(id: number) {
     if (!confirm("Delete this category and all its items?")) return;
-    await sb.from("menu_categories").delete().eq("id", id);
+    await api("delete_category", { id });
     fetchData();
-    setMessage("Category deleted");
-    setTimeout(() => setMessage(""), 3000);
+    showMsg("Category deleted");
   }
 
   async function deleteItem(id: number) {
     if (!confirm("Delete this item?")) return;
-    await sb.from("menu_items").delete().eq("id", id);
+    await api("delete_item", { id });
     fetchData();
-    setMessage("Item deleted");
-    setTimeout(() => setMessage(""), 3000);
+    showMsg("Item deleted");
   }
 
   function openEditCat(cat: MenuCategory) {
